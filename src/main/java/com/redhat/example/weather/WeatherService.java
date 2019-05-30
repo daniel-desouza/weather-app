@@ -23,15 +23,16 @@ public class WeatherService {
         england.setCities(Arrays.<City>asList(cities));
     }
 
-    //TODO: Inject selected country
+    @Inject
+    SelectedCountry selectedCountry;
 
-    //TODO: Inject EntityManager
+    @PersistenceContext(unitName = "primary")
+    EntityManager em;
 
-    //TODO: Expose REST GET service get country as JSON
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public Country getList() {
-        return england; //TODO: Replace with call to database
+        return em.find(Country.class,selectedCountry.getCode());
     }
 
 
